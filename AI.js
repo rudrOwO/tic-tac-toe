@@ -1,2 +1,2 @@
-async function miniMax(board, turn) {
+function miniMax(board, turn) {
 }

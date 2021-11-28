@@ -1,9 +1,9 @@
-let mainBoard = new Board();
+const mainBoard = new Board();
 const canvasWidth = 240;
 const canvasHeight = 240;
 const squareSide = canvasWidth / 3;
-const computer = Symbol('computer');
-const player = Symbol('player');
+const computer = Symbol('o');
+const player = Symbol('x');
 
 
 function setup() {
@@ -20,6 +20,20 @@ function touchStarted() {
     // Check Click/Touch bounds
     if (squareRow >= 0 && squareRow < 3 && squareCol >= 0 && squareCol < 3)
         mainBoard.set(squareRow, squareCol, player);
+    
+    // Check if board is saturated
+    if (mainBoard.saturation == 9) {
+        noLoop();
+        setTimeout(() => alert('Game Draw'), 20);
+    }
+    
+    // miniMax 
+    
+    // Check if Computer has Won
+    if (mainBoard.value === 1) {
+        noLoop();
+        setTimeout(() => alert('Computer Wins'), 20);
+    }
 }
 
 
