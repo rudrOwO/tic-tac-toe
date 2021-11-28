@@ -2,8 +2,8 @@ const mainBoard = new Board();
 const canvasWidth = 240;
 const canvasHeight = 240;
 const squareSide = canvasWidth / 3;
-const computer = Symbol('o');
-const player = Symbol('x');
+const COMPUTER = Symbol('o');
+const PLAYER = Symbol('x');
 
 
 function setup() {
@@ -19,7 +19,7 @@ function touchStarted() {
     
     // Check Click/Touch bounds
     if (squareRow >= 0 && squareRow < 3 && squareCol >= 0 && squareCol < 3)
-        mainBoard.set(squareRow, squareCol, player);
+        mainBoard.set(squareRow, squareCol, PLAYER);
     
     // Check if board is saturated
     if (mainBoard.saturation == 9) {
