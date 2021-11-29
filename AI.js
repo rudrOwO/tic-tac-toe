@@ -1,2 +1,2 @@
-function miniMax(board, turn) {
+function miniMax(board, currentBest, turn) {
 }

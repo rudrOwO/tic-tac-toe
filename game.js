@@ -1,9 +1,18 @@
+// AI uses Minimax with Alpha Beta Pruning and Dynamic Programming
+// Computer is the Maximizing Player
 const mainBoard = new Board();
 const canvasWidth = 240;
 const canvasHeight = 240;
 const squareSide = canvasWidth / 3;
 const COMPUTER = Symbol('o');
 const PLAYER = Symbol('x');
+
+
+function gameOver(message) {
+    noLoop();
+    redraw();
+    setTimeout(() => alert(message), 1000 / frameRate());
+}
 
 
 function setup() {
@@ -22,18 +31,14 @@ function touchStarted() {
         mainBoard.set(squareRow, squareCol, PLAYER);
     
     // Check if board is saturated
-    if (mainBoard.saturation == 9) {
-        noLoop();
-        setTimeout(() => alert('Game Draw'), 20);
-    }
+    if (mainBoard.saturation === 9)
+        gameOver('Game Draw');
     
-    // miniMax 
+    // Minimax
     
     // Check if Computer has Won
-    if (mainBoard.value === 1) {
-        noLoop();
-        setTimeout(() => alert('Computer Wins'), 20);
-    }
+    if (mainBoard.value === 1)
+        gameOver('Computer Wins');
 }
 
 
@@ -43,7 +48,7 @@ function draw() {
         for (let x = 0; x < canvasWidth; x += squareSide) {
             square(x, y, squareSide);
             let displayText = mainBoard.get(y / squareSide, x / squareSide);
-            if (displayText !== null)
+            if (displayText !== undefined)
                 text(displayText, x + squareSide / 2, y + squareSide / 2);
         }
     }
