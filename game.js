@@ -29,6 +29,8 @@ function touchStarted() {
     // Check Click/Touch bounds
     if (squareRow >= 0 && squareRow < 3 && squareCol >= 0 && squareCol < 3)
         mainBoard.set(squareRow, squareCol, PLAYER);
+    else
+        return;
     
     // Check if board is saturated
     if (mainBoard.saturation === 9) {
