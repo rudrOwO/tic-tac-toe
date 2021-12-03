@@ -31,12 +31,10 @@ class Board {
         ++this.saturation;
         
         // Scan board axes and diagonals
-        if ( this.#grid[i * 3 + 0] === turn.description && this.#grid[i * 3 + 1] === turn.description && this.#grid[i * 3 + 2] === turn.description
-             ||
-             this.#grid[0 * 3 + j] === turn.description && this.#grid[1 * 3 + j] === turn.description && this.#grid[2 * 3 + j] === turn.description
-             ||
-             this.#grid[0] === turn.description && this.#grid[4] === turn.description && this.#grid[8] === turn.description
-             ||
+        if ( 
+             this.#grid[i * 3 + 0] === turn.description && this.#grid[i * 3 + 1] === turn.description && this.#grid[i * 3 + 2] === turn.description ||
+             this.#grid[0 * 3 + j] === turn.description && this.#grid[1 * 3 + j] === turn.description && this.#grid[2 * 3 + j] === turn.description ||
+             this.#grid[0] === turn.description && this.#grid[4] === turn.description && this.#grid[8] === turn.description                         ||
              this.#grid[2] === turn.description && this.#grid[4] === turn.description && this.#grid[6] === turn.description
            )
            this.value = turn === COMPUTER ? 1 : -1;

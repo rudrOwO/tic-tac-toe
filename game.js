@@ -1,5 +1,5 @@
-// AI uses Minimax with Alpha Beta Pruning and Dynamic Programming
-// Computer is the Maximizing Player
+// AI uses Minimax with Alpha Beta Pruning
+// Computer is the Maximizing / Alpha Player
 const mainBoard = new Board();
 const canvasWidth = 240;
 const canvasHeight = 240;
@@ -31,14 +31,19 @@ function touchStarted() {
         mainBoard.set(squareRow, squareCol, PLAYER);
     
     // Check if board is saturated
-    if (mainBoard.saturation === 9)
+    if (mainBoard.saturation === 9) {
         gameOver('Game Draw');
+        return;
+    }
     
-    // Minimax
+    // Move from Computer
+    mainBoard.set(...compMove(), COMPUTER);
     
     // Check if Computer has Won
-    if (mainBoard.value === 1)
+    if (mainBoard.value === 1) {
         gameOver('Computer Wins');
+        return;
+    }
 }
 
 
