@@ -47,8 +47,7 @@ function touchStarted() {
 }
 
 
-function draw() {
-    // UI Render
+function draw() {  // UI Render
     for (let y = 0; y < canvasHeight; y += squareSide) {
         for (let x = 0; x < canvasWidth; x += squareSide) {
             square(x, y, squareSide);

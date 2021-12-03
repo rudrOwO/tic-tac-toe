@@ -1,10 +1,6 @@
-function compMove() {
-    let alpha = -1;
-    let beta = 1;
-    let bestMove = {value: -1, pos: []};
-    
-    const miniMax = function(board, turn) {
-        if (board.saturation === 9 || board.value !== 0)  // Depth Termination
+function compMove() {  // Decorator for miniMax function
+    const miniMax = function (board, alpha, beta, turn) {  // Minimax function
+        if (board.saturation === 9 || board.value !== 0)  // Static Evaluation
             return board.value;
         
         if (turn === COMPUTER) {  // This is the Maximizing Player
@@ -13,11 +9,11 @@ function compMove() {
             for (let i = 0, breakNest = false; i < 3 && !breakNest; ++i) for (let j = 0; j < 3 && !breakNest; ++j) if (board.get(i, j) === undefined) {
                 let newBoard = new Board(board);
                 newBoard.set(i, j, COMPUTER);
-                bestMove = Math.max(bestMove, miniMax(newBoard, PLAYER));
-                // alpha = Math.max(bestMove, alpha);
+                bestMove = Math.max(bestMove, miniMax(newBoard, alpha, beta, PLAYER));
+                alpha = Math.max(bestMove, alpha);
                 
-                // if (alpha > beta)
-                //     breakNest = true;
+                if (alpha > beta)
+                    breakNest = true;
             }
             
             return bestMove;
@@ -28,29 +24,32 @@ function compMove() {
             for (let i = 0, breakNest = false; i < 3 && !breakNest; ++i) for (let j = 0; j < 3 && !breakNest; ++j) if (board.get(i, j) === undefined) {
                 let newBoard = new Board(board);
                 newBoard.set(i, j, PLAYER);
-                bestMove = Math.min(bestMove, miniMax(newBoard, COMPUTER));
-                // beta = Math.min(bestMove, beta);
+                bestMove = Math.min(bestMove, miniMax(newBoard, alpha, beta, COMPUTER));
+                beta = Math.min(bestMove, beta);
                 
-                // if (alpha > beta)
-                //     breakNest = true;
+                if (alpha > beta)
+                    breakNest = true;
             }
 
             return bestMove;
         }
     }
+    
+    // Wrapper Code
+    let bestMove = {value: -1, pos: []};
 
     for (let i = 0, breakNest = false; i < 3 && !breakNest; ++i) for (let j = 0; j < 3 && !breakNest; ++j) if (mainBoard.get(i, j) === undefined) {
         let newBoard = new Board(mainBoard);
         newBoard.set(i, j, COMPUTER);
-        let latestMove = miniMax(newBoard, PLAYER);
+        let latestMove = miniMax(newBoard, -1, 1, PLAYER);
         
         if (latestMove > bestMove.value) {
             bestMove.value = latestMove;
             bestMove.pos = [i, j];
         }
         
-        // if (alpha > beta)
-        //     breakNest = true;
+        if (bestMove.value === 1)
+            breakNest = true;
     }
     
     return bestMove.pos;

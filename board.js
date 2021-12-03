@@ -3,8 +3,7 @@ class Board {
     value = 0;
     saturation = 0;
 
-    // Copy Constructor
-    constructor(other) {
+    constructor(other) {  // Copy Constructor
         if (other !== undefined) {
             this.saturation = other.saturation;
             this.value = other.value;
@@ -13,25 +12,23 @@ class Board {
         }
     }
 
-    // Getter for a specific cell; Call with no parameters to get the entire grid
-    get(i, j) {
+    
+    get(i, j) {  // Getter for a specific cell; Call with no parameters to get the entire grid
         if (i === undefined && j === undefined)
             return this.#grid;
 
         return this.#grid[i * 3 + j];
     }
 
-    // Setter for a specific cell;
-    set(i, j, turn) {
-        // Override Guard
-        if (this.#grid[i * 3 + j] !== undefined)
+    
+    set(i, j, turn) {  // Setter for a specific cell;
+        if (this.#grid[i * 3 + j] !== undefined) // Override Guard
             return;
 
         this.#grid[i * 3 + j] = turn.description;
         ++this.saturation;
         
-        // Scan board axes and diagonals
-        if ( 
+        if (  // Scan board axes and diagonals 
              this.#grid[i * 3 + 0] === turn.description && this.#grid[i * 3 + 1] === turn.description && this.#grid[i * 3 + 2] === turn.description ||
              this.#grid[0 * 3 + j] === turn.description && this.#grid[1 * 3 + j] === turn.description && this.#grid[2 * 3 + j] === turn.description ||
              this.#grid[0] === turn.description && this.#grid[4] === turn.description && this.#grid[8] === turn.description                         ||
