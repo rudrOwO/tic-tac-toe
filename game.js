@@ -11,7 +11,11 @@ const PLAYER = Symbol('x');
 function gameOver(message) {
     noLoop();
     redraw();
-    setTimeout(() => alert(message), 1000 / frameRate());
+
+    setTimeout(() => {
+        alert(message);
+        document.location.reload();
+    }, 1000 / frameRate());
 }
 
 
@@ -33,19 +37,16 @@ function touchStarted() {
         return;
     
     // Check if board is saturated
-    if (mainBoard.saturation === 9) {
+    if (mainBoard.saturation === 9)
         gameOver('Game Draw');
-        return;
-    }
+    
     
     // Move from Computer
     mainBoard.set(...compMove(), COMPUTER);
     
     // Check if Computer has Won
-    if (mainBoard.value === 1) {
+    if (mainBoard.value === 1)
         gameOver('Computer Wins');
-        return;
-    }
 }
 
 
