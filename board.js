@@ -23,7 +23,7 @@ class Board {
     
     set(i, j, turn) {  // Setter for a specific cell;
         if (this.#grid[i * 3 + j] !== undefined) // Override Guard
-            return;
+            return false;
 
         this.#grid[i * 3 + j] = turn.description;
         ++this.saturation;
@@ -35,5 +35,7 @@ class Board {
              this.#grid[2] === turn.description && this.#grid[4] === turn.description && this.#grid[6] === turn.description
            )
            this.value = turn === COMPUTER ? 1 : -1;
+        
+        return true;
     }
 }
