@@ -31,13 +31,12 @@ function touchStarted() {
     let squareCol = Math.trunc(mouseX / squareSide);
     
     // Check Click/Touch bounds
-    if (!(squareRow >= 0 && squareRow < 3 && squareCol >= 0 && squareCol < 3 && mainBoard.set(squareRow, squareCol, PLAYER)))
+    if (!mainBoard.set(squareRow, squareCol, PLAYER))
         return;
     
     // Check if board is saturated
     if (mainBoard.saturation === 9)
         gameOver('Game Draw');
-    
     
     // Move from Computer
     mainBoard.set(...compMove(), COMPUTER);

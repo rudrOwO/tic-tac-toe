@@ -22,7 +22,7 @@ class Board {
 
     
     set(i, j, turn) {  // Setter for a specific cell;
-        if (this.#grid[i * 3 + j] !== undefined) // Override Guard
+        if (this.#grid[i * 3 + j] !== undefined || !(i >= 0 && i < 3 && j >= 0 && j < 3)) // Override + Out-of-bounds Guard
             return false;
 
         this.#grid[i * 3 + j] = turn.description;
