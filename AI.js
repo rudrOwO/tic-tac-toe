@@ -38,8 +38,8 @@ function compMove() {  // Decorator for miniMax function
     // Wrapper Code
     let bestMove = {value: -1, pos: []};
 
-    for (let i = 0, breakNest = false; i < 3 && !breakNest; ++i) for (let j = 0; j < 3 && !breakNest; ++j) if (mainBoard.get(i, j) === undefined) {
-        let newBoard = new Board(mainBoard);
+    for (let i = 0, breakNest = false; i < 3 && !breakNest; ++i) for (let j = 0; j < 3 && !breakNest; ++j) if (motherBoard.get(i, j) === undefined) {
+        let newBoard = new Board(motherBoard);
         newBoard.set(i, j, COMPUTER);
         let latestMove = miniMax(newBoard, -1, 1, PLAYER);
         

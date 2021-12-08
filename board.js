@@ -19,6 +19,22 @@ class Board {
 
         return this.#grid[i * 3 + j];
     }
+    
+
+    test(i, j, turn) {
+        let testCases = [
+            [[i, 0], [i, 1], [i, 2]],
+            [[0, j], [1, j], [2, j]],
+            [[0, 0], [1, 1], [2, 2]],
+            [[0, 2], [1, 1], [2, 0]],
+        ];
+        
+        for (const sequence of testCases) 
+            if (sequence.every((testPos) => this.get(...testPos) === turn.description))
+                return sequence;
+        
+        return null;
+    }
 
     
     set(i, j, turn) {  // Setter for a specific cell;
@@ -28,12 +44,8 @@ class Board {
         this.#grid[i * 3 + j] = turn.description;
         ++this.saturation;
         
-        if (  // Scan board axes and diagonals 
-             this.#grid[i * 3 + 0] === turn.description && this.#grid[i * 3 + 1] === turn.description && this.#grid[i * 3 + 2] === turn.description ||
-             this.#grid[0 * 3 + j] === turn.description && this.#grid[1 * 3 + j] === turn.description && this.#grid[2 * 3 + j] === turn.description ||
-             this.#grid[0] === turn.description && this.#grid[4] === turn.description && this.#grid[8] === turn.description                         ||
-             this.#grid[2] === turn.description && this.#grid[4] === turn.description && this.#grid[6] === turn.description
-           )
+        // Scan board axes and diagonals 
+        if (this.test(i, j, turn))
            this.value = turn === COMPUTER ? 1 : -1;
         
         return true;

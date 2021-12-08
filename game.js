@@ -1,6 +1,7 @@
 // AI uses Minimax with Alpha Beta Pruning
 // Computer is the Maximizing / Alpha Player
-const mainBoard = new Board();
+let winningMove = null;
+const motherBoard = new Board();
 const canvasWidth = 240;
 const canvasHeight = 240;
 const squareSide = canvasWidth / 3;
@@ -27,33 +28,47 @@ function setup() {
 
 
 function touchStarted() {
-    let squareRow = Math.trunc(mouseY / squareSide);
-    let squareCol = Math.trunc(mouseX / squareSide);
+    const squareRow = Math.trunc(mouseY / squareSide);
+    const squareCol = Math.trunc(mouseX / squareSide);
     
     // Check Click/Touch bounds
-    if (!mainBoard.set(squareRow, squareCol, PLAYER))
+    if (!motherBoard.set(squareRow, squareCol, PLAYER))
         return;
     
     // Check if board is saturated
-    if (mainBoard.saturation === 9)
+    if (motherBoard.saturation === 9)
         gameOver('Game Draw');
     
     // Move from Computer
-    mainBoard.set(...compMove(), COMPUTER);
+    winningMove = compMove();
+    motherBoard.set(...winningMove, COMPUTER);
     
     // Check if Computer has Won
-    if (mainBoard.value === 1)
+    if (motherBoard.value === 1)
         gameOver('Computer Wins');
 }
 
 
-function draw() {  // UI Render
+function draw() {  
+    // UI Render
     for (let y = 0; y < canvasHeight; y += squareSide) {
         for (let x = 0; x < canvasWidth; x += squareSide) {
+            fill(0xff);
             square(x, y, squareSide);
-            let displayText = mainBoard.get(y / squareSide, x / squareSide);
+            fill(0x00);
+            const displayText = motherBoard.get(y / squareSide, x / squareSide);
             if (displayText !== undefined)
                 text(displayText, x + squareSide / 2, y + squareSide / 2);
+        }
+    }
+    
+    // Display winning move in Red
+    if (motherBoard.value === 1) {
+        fill(0xff, 0x00, 0x00);
+        
+        for (const position of motherBoard.test(...winningMove, COMPUTER)) {
+            const [y, x] = position;
+            text(COMPUTER.description, x * squareSide + squareSide / 2, y * squareSide + squareSide / 2);
         }
     }
 }
