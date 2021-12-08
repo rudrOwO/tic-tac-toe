@@ -2,9 +2,9 @@
 // Computer is the Maximizing / Alpha Player
 let winningMove = null;
 const motherBoard = new Board();
-const canvasWidth = 240;
-const canvasHeight = 240;
-const squareSide = canvasWidth / 3;
+const isMobile = navigator.userAgentData.mobile;
+const sideLength = isMobile ? Math.min(innerHeight, innerWidth) : 240;
+const squareSide = sideLength / 3;
 const COMPUTER = Symbol('o');
 const PLAYER = Symbol('x');
 
@@ -21,7 +21,7 @@ function gameOver(message) {
 
 
 function setup() {
-    createCanvas(canvasWidth, canvasHeight);
+    createCanvas(sideLength, sideLength);
     textSize(squareSide);
     textAlign(CENTER, CENTER);
 }
@@ -51,8 +51,8 @@ function touchStarted() {
 
 function draw() {  
     // UI Render
-    for (let y = 0; y < canvasHeight; y += squareSide) {
-        for (let x = 0; x < canvasWidth; x += squareSide) {
+    for (let y = 0; y < sideLength; y += squareSide) {
+        for (let x = 0; x < sideLength; x += squareSide) {
             fill(0xff);
             square(x, y, squareSide);
             fill(0x00);
