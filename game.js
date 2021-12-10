@@ -24,6 +24,7 @@ function setup() {
     createCanvas(sideLength, sideLength);
     textSize(squareSide);
     textAlign(CENTER, CENTER);
+    strokeWeight(2);
 }
 
 
