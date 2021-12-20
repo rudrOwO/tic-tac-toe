@@ -21,7 +21,15 @@ function gameOver(message) {
 
 
 function setup() {
-    createCanvas(sideLength, sideLength);
+    const defaultCanvas = createCanvas(sideLength, sideLength);
+    defaultCanvas.style('padding',  '0');
+    defaultCanvas.style('display',  'block');
+    defaultCanvas.style('margin',   'auto');
+    defaultCanvas.style('position', 'absolute');
+    defaultCanvas.style('top',      '0');
+    defaultCanvas.style('bottom',   '0');
+    defaultCanvas.style('left',     '0');
+    defaultCanvas.style('right',    '0');
     textSize(squareSide);
     textAlign(CENTER, CENTER);
     strokeWeight(2);
