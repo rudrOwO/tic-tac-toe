@@ -3,7 +3,7 @@
 let winningMove = null;
 const motherBoard = new Board();
 const isMobile = navigator.userAgentData.mobile;
-const sideLength = isMobile ? Math.min(innerHeight, innerWidth) : 240;
+const sideLength = isMobile ? Math.min(innerHeight, innerWidth) : 270;
 const squareSide = sideLength / 3;
 const COMPUTER = Symbol('o');
 const PLAYER = Symbol('x');
@@ -22,15 +22,16 @@ function gameOver(message) {
 
 function setup() {
     const defaultCanvas = createCanvas(sideLength, sideLength);
+
+    // Canvas Styling
     defaultCanvas.style('padding',  '0');
     defaultCanvas.style('display',  'block');
     defaultCanvas.style('margin',   'auto');
     defaultCanvas.style('position', 'absolute');
-    defaultCanvas.style('top',      '0');
-    defaultCanvas.style('bottom',   '0');
-    defaultCanvas.style('left',     '0');
-    defaultCanvas.style('right',    '0');
-    textSize(squareSide);
+    defaultCanvas.style('inset',    '0');
+
+    // Text and Stroke Styling
+    textSize(squareSide * 0.9);
     textAlign(CENTER, CENTER);
     strokeWeight(2);
 }
@@ -62,9 +63,15 @@ function draw() {
     // UI Render
     for (let y = 0; y < sideLength; y += squareSide) {
         for (let x = 0; x < sideLength; x += squareSide) {
+            // Drawing vertical lines
             fill(0xff);
-            square(x, y, squareSide);
+            line(squareSide, 0, squareSide, sideLength);
+            line(2 * squareSide, 0, 2 * squareSide, sideLength);
+            line(0, squareSide, sideLength, squareSide);
+            line(0, 2 * squareSide, sideLength, 2 * squareSide);
             fill(0x00);
+
+            // Drawing x or o;
             const displayText = motherBoard.get(y / squareSide, x / squareSide);
             if (displayText !== undefined)
                 text(displayText, x + squareSide / 2, y + squareSide / 2);
