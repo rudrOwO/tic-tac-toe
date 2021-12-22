@@ -1,4 +1,4 @@
-<img align="left" alt="p5.js" width="150px" src="https://p5js.org/assets/img/p5js.svg" /> 
+[<img align="left" alt="p5.js" width="120px" src="https://p5js.org/assets/img/p5js.svg" />](https://p5js.org/) 
 <br />
 <br />
 
