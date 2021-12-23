@@ -3,8 +3,8 @@
 let winningMove = null;
 const motherBoard = new Board();
 const isMobile = navigator.userAgentData.mobile;
-const sideLength = isMobile ? Math.min(innerHeight, innerWidth) : 270;
-const squareSide = sideLength / 3;
+const canvasSide = isMobile ? Math.min(innerHeight, innerWidth) * 0.9 : 270;
+const cellSide = canvasSide / 3;
 const COMPUTER = Symbol('o');
 const PLAYER = Symbol('x');
 
@@ -21,25 +21,21 @@ function gameOver(message) {
 
 
 function setup() {
-    const defaultCanvas = createCanvas(sideLength, sideLength);
+    const defaultCanvas = createCanvas(canvasSide, canvasSide);
 
-    // Canvas Styling
+    // Styling
     defaultCanvas.style('padding',  '0');
     defaultCanvas.style('display',  'block');
     defaultCanvas.style('margin',   'auto');
     defaultCanvas.style('position', 'absolute');
     defaultCanvas.style('inset',    '0');
-
-    // Text and Stroke Styling
-    textSize(squareSide * 0.9);
-    textAlign(CENTER, CENTER);
     strokeWeight(2);
 }
 
 
 function touchStarted() {
-    const squareRow = Math.trunc(mouseY / squareSide);
-    const squareCol = Math.trunc(mouseX / squareSide);
+    const squareRow = Math.trunc(mouseY / cellSide);
+    const squareCol = Math.trunc(mouseX / cellSide);
     
     // Check Click/Touch bounds
     if (!motherBoard.set(squareRow, squareCol, PLAYER))
@@ -59,32 +55,47 @@ function touchStarted() {
 }
 
 
+function drawShape(shape, centerX, centerY) {
+    if (shape === 'x') {  // Drawing X shape
+        const shapeRadius = (cellSide * 0.6) / 2;         
+        line(centerX, centerY, centerX + shapeRadius, centerY - shapeRadius);
+        line(centerX, centerY, centerX + shapeRadius, centerY + shapeRadius);
+        line(centerX, centerY, centerX - shapeRadius, centerY - shapeRadius);
+        line(centerX, centerY, centerX - shapeRadius, centerY + shapeRadius);
+    
+    } else { // Drawing O shape
+        const shapeRadius = (cellSide * 1.2) / 2;         
+        ellipse(centerX, centerY, shapeRadius, shapeRadius);
+    } 
+}
+
+
 function draw() {  
     // UI Render
-    for (let y = 0; y < sideLength; y += squareSide) {
-        for (let x = 0; x < sideLength; x += squareSide) {
-            // Drawing vertical lines
-            fill(0xff);
-            line(squareSide, 0, squareSide, sideLength);
-            line(2 * squareSide, 0, 2 * squareSide, sideLength);
-            line(0, squareSide, sideLength, squareSide);
-            line(0, 2 * squareSide, sideLength, 2 * squareSide);
-            fill(0x00);
+    for (let y = 0; y < canvasSide; y += cellSide) {
+        for (let x = 0; x < canvasSide; x += cellSide) {
+            stroke(0x00, 0x00, 0x00);
+
+            // Drawing the grid
+            line(cellSide, 0, cellSide, canvasSide);
+            line(2 * cellSide, 0, 2 * cellSide, canvasSide);
+            line(0, cellSide, canvasSide, cellSide);
+            line(0, 2 * cellSide, canvasSide, 2 * cellSide);
 
             // Drawing x or o;
-            const displayText = motherBoard.get(y / squareSide, x / squareSide);
+            const displayText = motherBoard.get(y / cellSide, x / cellSide);
             if (displayText !== undefined)
-                text(displayText, x + squareSide / 2, y + squareSide / 2);
+                drawShape(displayText, x + cellSide / 2, y + cellSide / 2);
         }
     }
     
     // Display winning move in Red
     if (motherBoard.value === 1) {
-        fill(0xff, 0x00, 0x00);
+        stroke(0xff, 0x00, 0x00);
         
         for (const position of motherBoard.test(...winningMove, COMPUTER)) {
             const [y, x] = position;
-            text(COMPUTER.description, x * squareSide + squareSide / 2, y * squareSide + squareSide / 2);
+            drawShape(COMPUTER.description, x * cellSide + cellSide / 2, y * cellSide + cellSide / 2);
         }
     }
 }
