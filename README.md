@@ -1,4 +1,6 @@
-[<img align="left" alt="p5.js" width="120px" src="https://p5js.org/assets/img/p5js.svg" />](https://p5js.org/) 
+### Tic-Tac-Toe with minimax AI
+
+[<img align="left" alt="p5.js" width="120px" src="https://p5js.org/assets/img/p5js.svg" />](https://p5js.org/)
 <br />
 <br />
 
