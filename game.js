@@ -1,6 +1,7 @@
 // AI uses Minimax with Alpha Beta Pruning
 // Computer is the Maximizing / Alpha Player
 let winningMove = null;
+let gameOver = false;
 const motherBoard = new Board();
 const isMobile = navigator.userAgentData.mobile;
 const canvasSide = isMobile ? Math.min(innerHeight, innerWidth) * 0.9 : 270;
@@ -8,7 +9,8 @@ const cellSide = canvasSide / 3;
 const COMPUTER = Symbol("o");
 const PLAYER = Symbol("x");
 
-function gameOver(message) {
+function onGameOver(message) {
+  gameOver = true;
   noLoop();
   redraw();
 
@@ -27,18 +29,18 @@ function touchStarted() {
   const squareRow = Math.trunc(mouseY / cellSide);
   const squareCol = Math.trunc(mouseX / cellSide);
 
-  // Check Click/Touch bounds
-  if (!motherBoard.set(squareRow, squareCol, PLAYER)) return;
+  // Return when interaction is not allowed
+  if (gameOver || !motherBoard.set(squareRow, squareCol, PLAYER)) return;
 
   // Check if board is saturated
-  if (motherBoard.saturation === 9) gameOver("Game Draw");
+  if (motherBoard.saturation === 9) onGameOver("Game Draw");
 
   // Move from Computer
   winningMove = compMove();
   motherBoard.set(...winningMove, COMPUTER);
 
   // Check if Computer has Won
-  if (motherBoard.value === 1) gameOver("Computer Wins");
+  if (motherBoard.value === 1) onGameOver("Computer Wins");
 }
 
 function drawShape(shape, centerX, centerY) {
@@ -52,7 +54,7 @@ function drawShape(shape, centerX, centerY) {
   } else {
     // Drawing O shape
     const shapeRadius = (cellSide * 1.2) / 2;
-    ellipse(centerX, centerY, shapeRadius, shapeRadius);
+    circle(centerX, centerY, shapeRadius);
   }
 }
 
