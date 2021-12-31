@@ -2,9 +2,11 @@
 // Computer is the Maximizing / Alpha Player
 let winningMove = null;
 let gameOver = false;
+const canvasSide = (() => {
+  let minDimension = Math.min(innerHeight, innerWidth);
+  return minDimension >= 450 ? 285 : minDimension * 0.9;
+})();
 const motherBoard = new Board();
-const isMobile = navigator.userAgentData.mobile;
-const canvasSide = isMobile ? Math.min(innerHeight, innerWidth) * 0.9 : 270;
 const cellSide = canvasSide / 3;
 const COMPUTER = Symbol("o");
 const PLAYER = Symbol("x");
@@ -17,12 +19,17 @@ function onGameOver(message) {
   setTimeout(() => {
     alert(message);
     document.location.reload();
-  }, 500);
+  }, 300);
 }
 
 function setup() {
   createCanvas(canvasSide, canvasSide);
   strokeWeight(2);
+}
+
+function mouseClicked() {
+  // Redirection for Non-Mobile Devices
+  touchStarted();
 }
 
 function touchStarted() {
